@@ -9,12 +9,14 @@
   </head>
   <body>
     <header class="header">
-      <ul class="Header-links-ul">
-        <li class="header-link" id="about-link">About Me</li>
-        <li class="header-link" id="gallery-link">Gallery</li>
-        <li class="header-link" id="contact-link">Contact</li>
-        <button id="theme-toggle">Toggle Theme</button>
-      </ul>
+      <div>
+        <a href="/about" data-navigo>About</a>
+        <a href="/products?a=b#something-here" data-navigo>Products 1</a>
+        <a href="/products?c=d" data-navigo>Products 2</a>
+        <a href="/login" data-navigo>Login</a>
+        <a href="/login" data-navig="false">Reload to login</a>
+        <a href="/login" data-navig target="_blank">New tab to login</a>
+      </div>
     </header>
     <main>
       <h1 class="title">Hello World!</h1>
@@ -22,8 +24,36 @@
         Lorem Ipsum is simply dummy text of the printing and typesetting
         industry...
       </p>
+      <div id="content"></div>
     </main>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script src="js/router.js"></script>
+    <script src="js/main.js"></script>
   </body>
+  <script src="//unpkg.com/navigo"></script>
+
+  <script>
+    window.addEventListener("load", () => {
+      const router = new Navigo("/");
+      const render = (content) =>
+        (document.querySelector("#content").innerHTML = content);
+
+      router
+        .on("/about", (match) => {
+          console.log(match);
+          render("About");
+        })
+        .on("/products", (match) => {
+          console.log(match);
+          render("Products " + JSON.stringify(match.params));
+        })
+        .on("/login", (match) => {
+          console.log(match);
+          render("Login");
+        })
+        .on((match) => {
+          console.log(match);
+          render("home");
+        })
+        .resolve();
+    });
+  </script>
 </html>
