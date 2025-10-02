@@ -1,0 +1,24 @@
+{
+  "name": "portfolio-spa",
+  "version": "1.0.0",
+  "description": "TypeScript SPA with Navigo routing",
+  "main": "dist/main.js",
+  "scripts": {
+    "dev": "concurrently \"tsc --watch\" \"http-server . -p 3000\"",
+    "build": "tsc",
+    "build:prod": "tsc && npm run minify",
+    "minify": "terser dist/main.js -o dist/main.min.js",
+    "serve": "http-server . -p 3000",
+    "deploy": "npm run build:prod && git add . && git commit -m 'Deploy to GitHub Pages' && git push origin main"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.0",
+    "concurrently": "^8.2.2",
+    "http-server": "^14.1.1",
+    "terser": "^5.24.0",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "navigo": "^8.11.1"
+  }
+}
