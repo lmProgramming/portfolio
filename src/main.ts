@@ -1,14 +1,15 @@
 import Navigo, { Match } from "navigo";
-import { StateManager } from "./utils/StateManager.js";
-import { Header } from "./components/Header.js";
+import { StateManager } from "./utils/StateManager";
+import { Header } from "./components/Header";
 import {
   HomePage,
   AboutPage,
   ProjectGridPage,
   ProjectPage,
   NotFoundPage,
-} from "./pages/index.js";
-import { getBasePath } from "./utils/config.js";
+} from "./pages/index";
+import { getBasePath } from "./utils/config";
+import { darkTheme, themeKey } from "./utils/constants";
 
 export class App {
   private router: any;
@@ -193,10 +194,23 @@ export class App {
   }
 
   private initializeTheme(): void {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
+    if (this.isDarkMode()) {
       document.body.classList.add("dark-theme");
     }
+  }
+
+  private isDarkMode(): boolean {
+    const savedTheme = localStorage.getItem(themeKey);
+    if (savedTheme === darkTheme) {
+      return true;
+    }
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      return true;
+    }
+    return false;
   }
 
   public getState() {

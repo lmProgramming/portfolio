@@ -1,11 +1,11 @@
+import { darkTheme, lightTheme, themeKey } from "../utils/constants";
+
 export abstract class Component {
   protected element: HTMLElement | null = null;
 
   public abstract render(): string;
 
-  protected attachEventListeners(): void {
-    // Override in child classes if needed
-  }
+  protected attachEventListeners(): void {}
 
   protected querySelector(selector: string): HTMLElement | null {
     return this.element?.querySelector(selector) || null;
@@ -84,6 +84,6 @@ export class Header extends Component {
     if (icon) {
       icon.textContent = isDark ? "light_mode" : "dark_mode";
     }
-    localStorage.setItem("theme", isDark ? "dark" : "light");
+    localStorage.setItem(themeKey, isDark ? darkTheme : lightTheme);
   }
 }

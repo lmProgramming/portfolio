@@ -1,4 +1,4 @@
-import { AppState, StateListener } from "../types/index.js";
+import { AppState, StateListener } from "../types/index";
 
 export class StateManager {
   private state: AppState;

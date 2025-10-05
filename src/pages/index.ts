@@ -1,6 +1,6 @@
 import { Match } from "navigo";
-import { Component } from "../components/Header.js";
-import { Project, Tech } from "../types/index.js";
+import { Component } from "../components/Header";
+import { Project, Tech } from "../types/index";
 
 abstract class Page extends Component {
   protected title: string = "";
