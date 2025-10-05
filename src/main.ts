@@ -9,7 +9,7 @@ import {
   NotFoundPage,
 } from "./pages/index";
 import { getBasePath } from "./utils/config";
-import { darkTheme, themeKey } from "./utils/constants";
+import { darkMode, lightMode, themeKey } from "./utils/constants";
 import { Page } from "./types";
 
 export class App {
@@ -21,7 +21,7 @@ export class App {
 
   constructor() {
     this.stateManager = new StateManager();
-    this.header = new Header();
+    this.header = new Header(this.getDefaultThemeMode());
 
     // Get DOM elements
     this.contentElement = document.querySelector("#content") as HTMLElement;
@@ -195,23 +195,23 @@ export class App {
   }
 
   private initializeTheme(): void {
-    if (this.isDarkMode()) {
+    if (this.getDefaultThemeMode() === darkMode) {
       document.body.classList.add("dark-theme");
     }
   }
 
-  private isDarkMode(): boolean {
+  private getDefaultThemeMode(): string {
     const savedTheme = localStorage.getItem(themeKey);
-    if (savedTheme === darkTheme) {
-      return true;
+    if (savedTheme === darkMode) {
+      return darkMode;
     }
     if (
       window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches
     ) {
-      return true;
+      return darkMode;
     }
-    return false;
+    return lightMode;
   }
 
   public getState() {

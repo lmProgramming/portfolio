@@ -1,4 +1,4 @@
-import { darkTheme, lightTheme, themeKey } from "../utils/constants";
+import { darkMode, lightMode, themeKey } from "../utils/constants";
 
 export abstract class Component {
   protected element: HTMLElement | null = null;
@@ -19,6 +19,10 @@ export abstract class Component {
 }
 
 export class Header extends Component {
+  constructor(private initialThemeMode: string) {
+    super();
+  }
+
   public render(): string {
     return `
       <nav class="navbar">
@@ -37,7 +41,9 @@ export class Header extends Component {
         </div>
         <div class="nav-actions">
           <button id="theme-toggle" class="btn btn-secondary">
-            <span class="material-icons">dark_mode</span>
+            <span class="material-icons">${
+              this.initialThemeMode === darkMode ? lightMode : darkMode
+            }</span>
           </button>
         </div>
       </nav>
@@ -82,8 +88,8 @@ export class Header extends Component {
     const themeToggle = this.querySelector("#theme-toggle");
     const icon = themeToggle?.querySelector(".material-icons");
     if (icon) {
-      icon.textContent = isDark ? "light_mode" : "dark_mode";
+      icon.textContent = isDark ? lightMode : darkMode;
     }
-    localStorage.setItem(themeKey, isDark ? darkTheme : lightTheme);
+    localStorage.setItem(themeKey, isDark ? darkMode : lightMode);
   }
 }
