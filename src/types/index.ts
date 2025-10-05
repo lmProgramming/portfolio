@@ -1,5 +1,14 @@
+export enum Page {
+  Home = "home",
+  About = "about",
+  Projects = "projects",
+  Project = "project",
+  Contact = "contact",
+  NotFound = "notfound",
+}
+
 export interface AppState {
-  currentPage: string;
+  currentPage: Page;
   isLoading: boolean;
 }
 

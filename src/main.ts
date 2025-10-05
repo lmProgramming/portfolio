@@ -10,6 +10,7 @@ import {
 } from "./pages/index";
 import { getBasePath } from "./utils/config";
 import { darkTheme, themeKey } from "./utils/constants";
+import { Page } from "./types";
 
 export class App {
   private router: any;
@@ -78,12 +79,12 @@ export class App {
     this.router
       .on("/", () => {
         this.loadPage(() => new HomePage().render(), "Home - Portfolio");
-        this.stateManager.setCurrentPage("home");
+        this.stateManager.setCurrentPage(Page.Home);
       })
 
       .on("/about", () => {
         this.loadPage(() => new AboutPage().render(), "About - Portfolio");
-        this.stateManager.setCurrentPage("about");
+        this.stateManager.setCurrentPage(Page.About);
       })
 
       .on("/projects", () => {
@@ -91,7 +92,7 @@ export class App {
           () => new ProjectGridPage().render(),
           "projects - Portfolio"
         );
-        this.stateManager.setCurrentPage("projects");
+        this.stateManager.setCurrentPage(Page.Projects);
       })
       .on("/projects/:id", (match: Match) => {
         const projectId = match?.data?.id || "unknown";
@@ -99,18 +100,18 @@ export class App {
           () => new ProjectPage().render(match),
           `project ${projectId} - Portfolio`
         );
-        this.stateManager.setCurrentPage("project-detail");
+        this.stateManager.setCurrentPage(Page.Project);
       })
 
       .on("/contact", () => {
         this.loadPage(() => this.renderContactPage(), "Contact - Portfolio");
-        this.stateManager.setCurrentPage("contact");
+        this.stateManager.setCurrentPage(Page.Contact);
       })
 
       // 404 handler
       .notFound(() => {
         this.render(new NotFoundPage().render(), "404 - Page Not Found");
-        this.stateManager.setCurrentPage("404");
+        this.stateManager.setCurrentPage(Page.NotFound);
       })
 
       .resolve();
