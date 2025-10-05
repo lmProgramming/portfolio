@@ -1,3 +1,4 @@
+import { FeatureCard } from "../components/FeatureCard";
 import { Page } from "./Page";
 
 export class HomePage extends Page {
@@ -18,18 +19,18 @@ export class HomePage extends Page {
       </div>
       <section class="features">
         <div class="feature-grid">
-          <div class="feature-card">
-            <h3>TypeScript</h3>
-            <p>Type-safe development with modern tooling</p>
-          </div>
-          <div class="feature-card">
-            <h3>SPA Routing</h3>
-            <p>Client-side navigation with Navigo</p>
-          </div>
-          <div class="feature-card">
-            <h3>GitHub Pages</h3>
-            <p>Deployed and hosted on GitHub Pages</p>
-          </div>
+          ${new FeatureCard(
+            "TypeScript",
+            "Type-safe development with modern tooling"
+          ).render()}
+          ${new FeatureCard(
+            "SPA Routing",
+            "Client-side navigation with Navigo"
+          ).render()}
+          ${new FeatureCard(
+            "GitHub Pages",
+            "Deployed and hosted on GitHub Pages"
+          ).render()}
         </div>
       </section>
     `;
