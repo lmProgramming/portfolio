@@ -1,4 +1,4 @@
-import { AppState, Page, StateListener } from "../types/index";
+import { AppState, PageType, StateListener } from "../types/index";
 
 export class StateManager {
   private state: AppState;
@@ -6,7 +6,7 @@ export class StateManager {
 
   constructor() {
     this.state = {
-      currentPage: Page.Home,
+      currentPage: PageType.Home,
       isLoading: false,
     };
   }
@@ -35,7 +35,7 @@ export class StateManager {
     this.setState({ isLoading });
   }
 
-  public setCurrentPage(page: Page): void {
+  public setCurrentPage(page: PageType): void {
     this.setState({ currentPage: page });
   }
 }

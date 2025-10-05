@@ -1,16 +1,14 @@
 import Navigo, { Match } from "navigo";
 import { StateManager } from "./utils/StateManager";
 import { Header } from "./components/Header";
-import {
-  HomePage,
-  AboutPage,
-  ProjectGridPage,
-  ProjectPage,
-  NotFoundPage,
-} from "./pages/index";
 import { getBasePath } from "./utils/config";
 import { darkMode, lightMode, themeKey } from "./utils/constants";
-import { Page } from "./types";
+import { PageType } from "./types";
+import { AboutPage } from "./pages/AboutPage";
+import { HomePage } from "./pages/HomePage";
+import { ProjectGridPage } from "./pages/ProjectGridPage";
+import { ProjectPage } from "./pages/ProjectPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 
 export class App {
   private router: any;
@@ -79,12 +77,12 @@ export class App {
     this.router
       .on("/", () => {
         this.loadPage(() => new HomePage().render(), "Home - Portfolio");
-        this.stateManager.setCurrentPage(Page.Home);
+        this.stateManager.setCurrentPage(PageType.Home);
       })
 
       .on("/about", () => {
         this.loadPage(() => new AboutPage().render(), "About - Portfolio");
-        this.stateManager.setCurrentPage(Page.About);
+        this.stateManager.setCurrentPage(PageType.About);
       })
 
       .on("/projects", () => {
@@ -92,7 +90,7 @@ export class App {
           () => new ProjectGridPage().render(),
           "projects - Portfolio"
         );
-        this.stateManager.setCurrentPage(Page.Projects);
+        this.stateManager.setCurrentPage(PageType.Projects);
       })
       .on("/projects/:id", (match: Match) => {
         const projectId = match?.data?.id || "unknown";
@@ -100,18 +98,18 @@ export class App {
           () => new ProjectPage().render(match),
           `project ${projectId} - Portfolio`
         );
-        this.stateManager.setCurrentPage(Page.Project);
+        this.stateManager.setCurrentPage(PageType.Project);
       })
 
       .on("/contact", () => {
         this.loadPage(() => this.renderContactPage(), "Contact - Portfolio");
-        this.stateManager.setCurrentPage(Page.Contact);
+        this.stateManager.setCurrentPage(PageType.Contact);
       })
 
       // 404 handler
       .notFound(() => {
         this.render(new NotFoundPage().render(), "404 - Page Not Found");
-        this.stateManager.setCurrentPage(Page.NotFound);
+        this.stateManager.setCurrentPage(PageType.NotFound);
       })
 
       .resolve();
@@ -181,16 +179,13 @@ export class App {
   }
 
   private handleButtonClick(event: Event): void {
+    // Find the closest ancestor with data-action="navigate"
     const target = event.target as HTMLElement;
-    const action = target.dataset.action;
-
-    switch (action) {
-      case "navigate":
-        const route = target.dataset.route;
-        if (route) {
-          this.router.navigate(route);
-        }
-        break;
+    const navElement = target.closest(
+      '[data-action="navigate"]'
+    ) as HTMLElement | null;
+    if (navElement && navElement.dataset.route) {
+      this.router.navigate(navElement.dataset.route);
     }
   }
 

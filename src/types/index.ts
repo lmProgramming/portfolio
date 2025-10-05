@@ -1,4 +1,4 @@
-export enum Page {
+export enum PageType {
   Home = "home",
   About = "about",
   Projects = "projects",
@@ -8,7 +8,7 @@ export enum Page {
 }
 
 export interface AppState {
-  currentPage: Page;
+  currentPage: PageType;
   isLoading: boolean;
 }
 
