@@ -1,3 +1,4 @@
+import Navigo, { Match } from "navigo";
 import { StateManager } from "./utils/StateManager.js";
 import { Header } from "./components/Header.js";
 import {
@@ -7,9 +8,7 @@ import {
   ProjectPage,
   NotFoundPage,
 } from "./pages/index.js";
-import { RouteMatch } from "./types/index.js";
-
-declare const Navigo: any;
+import { getBasePath } from "./utils/config.js";
 
 export class App {
   private router: any;
@@ -30,8 +29,7 @@ export class App {
       throw new Error("Required DOM elements not found");
     }
 
-    // Initialize router
-    this.router = new Navigo("/", { hash: false });
+    this.router = new Navigo(getBasePath(), { hash: false });
 
     // Render header
     this.renderHeader();
@@ -61,14 +59,12 @@ export class App {
 
   private async loadPage(
     pageLoader: () => string,
-    title: string,
-    params?: RouteMatch
+    title: string
   ): Promise<void> {
     this.stateManager.setLoading(true);
     this.showLoading();
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 100)); // Simulate loading
       const content = pageLoader();
       this.render(content, title);
     } catch (error) {
@@ -79,19 +75,16 @@ export class App {
 
   private setupRoutes(): void {
     this.router
-      // Home route
       .on("/", () => {
         this.loadPage(() => new HomePage().render(), "Home - Portfolio");
         this.stateManager.setCurrentPage("home");
       })
 
-      // About route
       .on("/about", () => {
         this.loadPage(() => new AboutPage().render(), "About - Portfolio");
         this.stateManager.setCurrentPage("about");
       })
 
-      // projects routes
       .on("/projects", () => {
         this.loadPage(
           () => new ProjectGridPage().render(),
@@ -99,8 +92,8 @@ export class App {
         );
         this.stateManager.setCurrentPage("projects");
       })
-      .on("/projects/:id", (match: RouteMatch) => {
-        const projectId = match.data?.id || "unknown";
+      .on("/projects/:id", (match: Match) => {
+        const projectId = match?.data?.id || "unknown";
         this.loadPage(
           () => new ProjectPage().render(match),
           `project ${projectId} - Portfolio`
@@ -108,7 +101,6 @@ export class App {
         this.stateManager.setCurrentPage("project-detail");
       })
 
-      // Contact route
       .on("/contact", () => {
         this.loadPage(() => this.renderContactPage(), "Contact - Portfolio");
         this.stateManager.setCurrentPage("contact");
@@ -207,7 +199,6 @@ export class App {
     }
   }
 
-  // Public methods for external access
   public getState() {
     return this.stateManager.getState();
   }

@@ -1,10 +1,3 @@
-export interface RouteMatch {
-  data?: Record<string, any>;
-  params?: Record<string, string>;
-  url?: string;
-  queryString?: string;
-}
-
 export interface AppState {
   currentPage: string;
   isLoading: boolean;

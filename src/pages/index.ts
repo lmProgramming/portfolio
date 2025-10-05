@@ -1,10 +1,11 @@
+import { Match } from "navigo";
 import { Component } from "../components/Header.js";
-import { Project, RouteMatch, Tech } from "../types/index.js";
+import { Project, Tech } from "../types/index.js";
 
 abstract class Page extends Component {
   protected title: string = "";
 
-  public abstract override render(params?: RouteMatch): string;
+  public abstract override render(params?: Match): string;
 
   protected setTitle(title: string): void {
     this.title = title;
@@ -136,7 +137,7 @@ export class ProjectGridPage extends Page {
 }
 
 export class ProjectPage extends Page {
-  public override render(params?: RouteMatch): string {
+  public override render(params?: Match): string {
     const projectId = params?.data?.id || "unknown";
     this.setTitle(`Project ${projectId}`);
 
