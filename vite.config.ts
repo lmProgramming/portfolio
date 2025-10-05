@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import { resolve } from "path";
-import { BASE_PATH } from "./src/utils/config";
+
+const BASE_PATH = "/portfolio";
 
 export default defineConfig({
   root: ".",

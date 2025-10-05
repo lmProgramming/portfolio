@@ -1,6 +1,7 @@
 {
   "name": "portfolio-spa",
   "version": "1.0.0",
+  "type": "module",
   "description": "TypeScript SPA with Navigo routing",
   "main": "dist/main.js",
   "scripts": {
