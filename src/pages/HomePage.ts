@@ -6,8 +6,8 @@ export class HomePage extends Page {
     this.setTitle("Home");
     return `
       <div class="hero-section">
-        <h1 class="hero-title">Welcome to My Portfolio</h1>
-        <p class="hero-subtitle">Building amazing web experiences with TypeScript</p>
+        <h1 class="hero-title">Mikołaj Kubś</h1>
+        <p class="hero-subtitle">A warm welcome to my portfolio page!</p>
         <div class="hero-actions">
           <button class="btn btn-primary" data-action="navigate" data-route="/projects">
             View Projects
@@ -20,7 +20,7 @@ export class HomePage extends Page {
       <section class="features">
         <div class="feature-grid">
           ${new FeatureCard(
-            "TypeScript",
+            "Game development",
             "Type-safe development with modern tooling"
           ).render()}
           ${new FeatureCard(
